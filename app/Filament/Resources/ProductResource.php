@@ -33,10 +33,9 @@ class ProductResource extends Resource
                     ->required()
                     ->maxLength(60),
                 Forms\Components\Textarea::make('Description')
-                    ->maxLength(65535),
+                    ->maxLength(100),
                 Forms\Components\TextInput::make('Prix'),
-                Forms\Components\FileUpload::make('image')
-                    ->maxLength(150),
+                Forms\Components\FileUpload::make('image'),
             ]);
     }
 
