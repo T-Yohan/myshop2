@@ -1,24 +1,13 @@
-<h1>welcome</h1>
-<ul>
-    @foreach ($categories as $category)
-    <li>
-        <a href="{{route('welcome.category',$category)}}">
-        {{$category->name}}
-    </a>
-    </li>
-    @endforeach
+@extends('layouts.myshop')
 
-</ul>
-<ul>
-    @foreach ($products as $product)
-    <li>
-        <a href="{{route('welcome.detail',$product)}}">
-            <button>detail</button>
-        </a>
-        {{$product->name}}
-        {{$product->Prix}}
-
-    </li>
-    @endforeach
-
-</ul>
+@section('main')
+    <div class="masonry-loader">
+        <div class="row products product-thumb-info-list" data-plugin-masonry data-plugin-options="{'layoutMode': 'fitRows'}">
+            @forelse ($products as $itemProduct)
+                <x-product.card :product="$itemProduct" />
+            @empty
+                <p>Pas de produit</p>
+            @endforelse
+        </div>
+    </div>
+@endsection
