@@ -42,9 +42,28 @@ class ProductController extends Controller
         //verifier l'existence du produit dans le panier
         //selectionner le produit : SELECT*FROM CART WHERE user_id="?"  AND $product->id="?"->limit(0,1)
 
-        $cart=Cart::where('user_id',Auth::user()->id)
+        $carts=Cart::where('user_id',Auth::user()->id)
                     ->where('product_id',$product->id)
-                    ->limit(1)->get();
+                    ->first();
 
+
+//penser à controler l'existence du produit
+
+if(isset($carts)){
+    //SELECT*FROM CART WHERE user_id=# AND product_id=#
+    //update cart set quantity=# where id=#
+    $carts = Cart::where('id',$carts->id)
+                    ->update(['quantity'=>$carts->quantity+1,]);
+
+}else{
+    Cart::create([
+        "user_id"=>Auth::user()->id,
+        "product_id"=>$product->id,
+        "quantity"=>1,
+        "price"=>$product->Prix
+    ]);
+}
+
+// dd($carts);
     }
 }
